@@ -1,0 +1,110 @@
+.ConfirmationApprove {
+    text-align: center;
+    margin-top: 100px;
+  }
+  .container {
+    /* Container 5 */
+    position: absolute; 
+    top: 350px; 
+    left: 35%; 
+    width: 400px; 
+    height: 72px; 
+    background: #0FBC49FF; /* success-600 */
+    border-radius: 4px; /* border-m */
+    box-shadow: 0px 4px 9px #171a1f, 0px 0px 2px #171a1f; /* shadow-m */
+  }
+  
+  .containerFailed {
+    /* Container 5 */
+    position: absolute; 
+    top: 350px; 
+    left: 830px; 
+    width: 400px; 
+    height: 72px; 
+    background: #ff0000; /* success-600 */
+    border-radius: 4px; /* border-m */
+    box-shadow: 0px 4px 9px #171a1f, 0px 0px 2px #171a1f; /* shadow-m */
+  }
+  
+  .containerText{
+    position: absolute; 
+    /* top: 12px;  */
+    left: 10px; 
+    font-family: Epilogue; /* Heading */
+    font-size: 18px; 
+    line-height: 30px; 
+    color: #FFFFFFFF; /* white */
+  }
+/* E remove 2 */
+.icon {
+    position: absolute; 
+    top: 7px; 
+    left: 360px; 
+    width: 24px; 
+    height: 24px; 
+    color: #fff;
+    font-size: 17px;
+  }
+
+  .icon2 {
+    position: absolute; 
+    top:30px;
+    left:1150px;
+    width: 24px; 
+    height: 24px; 
+    color: #000000;
+    font-size: 17px;
+  }
+
+.icon-button{
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.icon-tick{
+    top: 7px;
+    left: 200px;
+    margin-right: 5px;
+}
+
+.homeIcon{
+    position: relative;
+    /* margin-right: 5px; */
+    left: 1800px;
+    margin-top: 2%;
+    width: 20px;
+    height: 20px;
+    color: #DB3D3DFF;
+}
+
+.icon-button2{
+    position: relative;
+  /* justify-content: flex-end; */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  
+}
+
+.homeIcon2{
+  position: relative;
+  /* margin-right: 5px; */
+  left: 1650px;
+  margin-top: 2%;
+  width: 20px;
+  height: 20px;
+  color: #DB3D3DFF;
+}
+
+.icon-button3{
+  position: relative;
+/* justify-content: flex-end; */
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+}

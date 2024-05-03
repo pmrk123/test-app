@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": "./src/codegen",
+        "outDir": "./out/codegen",
+        "skipLibCheck": true,
+        // "emitDeclarationOnly": false,
+        // "declaration": true,
+        "esModuleInterop": true,
+        "target": "es2022",
+        "module": "es2022",
+        "lib": [
+            "es2022",
+            "DOM"
+        ],
+        // "sourceMap": true,
+        "isolatedModules": true, // false in dosb-monorepo
+        "allowJs": true,
+        "downlevelIteration": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "jsx": "react"
+    },
+    "include": [
+        "src/codegen/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
