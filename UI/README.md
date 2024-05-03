@@ -4,7 +4,7 @@
 
 Inside this folder
 
-Copy the participant's address in the [environment](/src/env.js)
+Copy the participant's address in the (/src/env.js) file
 
 To get participant's address:
 

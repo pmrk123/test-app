@@ -5,7 +5,7 @@
 * chains
   * [wasmd](chains/wasmd/README.md) - cosmos based wasmd chain
 * cw-contracts - cw20 smart contract
-  * [cw20_base](contracts/contracts/README.md) - Current working contract
+  * [cw20_base](contracts/README.md) - Current working contract
 * front-ends
   * [node-api-server](frontend/README.md) - Client code
   * [wasmd ui code](UI/README.md) - UI code
