@@ -139,6 +139,19 @@ Generate protobuf
 make proto-gen
 ```
 
+Go to the scripts/contrib/local folder and run:
+
+```
+bash setup_wasmd.sh
+bash start_node.sh
+```
+
+In another terminal:
+
+```
+bash 01-accounts.sh
+```
+
 The generators are executed within a Docker [container](./scripts/contrib/prototools-docker), now.
 
 ## Dockerized
