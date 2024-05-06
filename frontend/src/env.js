@@ -1,4 +1,7 @@
 export const contractAddress = "wasm14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9s0phg4d";
-export const validatorPrivKey = "60a9c5ac2aa83368e34f4b379b38e425cc870e2253550b2427beba2d89f402bf";
-export const alicePrivKey = "b8b0ab8dfa23465fe88b55adefcdb5ba21a2c1b584be72f9d20b046433ac5207";
-export const fredPrivKey = "69e9e0d7fc616981653d4409d08d62f70330a9ed72fba5dbf42e8e57e4cd7167";
+export const validatorPrivKey = "c4a330b7eddc0dd85c4712ea8082f89c6852626deb22736c95e87aa683711441";
+export const alicePrivKey = "6374415cc3476b70ee78a5e20f1844e75a5957fb3d16a3afc5a119f588e4dd5f";
+export const fredPrivKey = "2875494e923040061fd129d2c8e98b7091ceabb1599118206f6e6f9880faa146";
+export const VALIDATOR_ADDRESS = "wasm14xmwj33xxwmu60wa5rsyjd6wffrcnhc74ggmzq";
+export const ALICE_ADDRESS="wasm1h9r2ge8x80hcuzzmj9cfvxdc8hwtz3yk0z7wdw";
+export const FRED_ADDRESS = "wasm16ws3d0u7rajh7evuk5wgln2wrejlan7vuyqz8s";

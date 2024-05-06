@@ -2,29 +2,28 @@
 import { useNavigate} from "react-router-dom"
 import React, { useState, useEffect } from 'react';
 import { API_URL, VALIDATOR_ADDRESS, FRED_ADDRESS, ALICE_ADDRESS } from '../env.js';
+import { BsXLg, BsCheckCircleFill,BsFillHouseDoorFill} from "react-icons/bs";
 
 const TokenTransfer = () => {
     const [selectedSource, setSelectedSource] = useState('');
     const [selectedTarget, setSelectedTarget] = useState('');
     const [amount, setAmount] = useState('');
     const [account, setAccount] = useState('');
-
+   
    
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState(false);
     const navigate = useNavigate();
+    const closeModal = () => {
+      setStatus(false);
+    };
+
   
 
     useEffect(() => {
-        if (status === '0') {
-          // Navigate after the title and text are updated
-         
-        }
-        else if(status === '1'){
-          navigate(`/confirmationApprove/${title}/${text}`);
-        }
-      }, [title, text, status, navigate]);
+       
+      });
    
 
     const handleFormSubmit = async (event) => {
@@ -71,11 +70,11 @@ const TokenTransfer = () => {
             .then((data) => {
               console.log('this is data', data);
               if (data.success) {
-                setStatus('1');
+                setStatus(true);
                 setTitle('Tokens Sent!');
-                setText(`${amount} has been credited to recipient's account`);
+                setText(`${amount} tokens have been transferred!`);
               } else {
-                setStatus('0');
+                setStatus(false);
                 setTitle('Transfer Failed');
                 setText('*****');
               }
@@ -122,7 +121,23 @@ const TokenTransfer = () => {
     }, []);
 
     return (
-        <div>
+      <>
+      <div >
+      
+      {/* <button onClick={handleConfirmation}>Show Confirmation</button> */}
+
+      {status && (
+        <div className="container">
+          <div className="containerText">
+            <p><BsCheckCircleFill className='icon-tick' />Success</p>
+            <p>{text}</p>
+           <button onClick={closeModal} className="icon-button"><BsXLg className='icon'/></button>
+          </div>
+        </div>
+      )}
+    </div>
+
+      <div>
             <h3 style={{ paddingLeft: '30px' }}>Transfer Tokens</h3>
 
             <form onSubmit={handleFormSubmit}>
@@ -232,6 +247,8 @@ const TokenTransfer = () => {
             </form>
             
         </div>
+      </>
+        
     );
 };
 
