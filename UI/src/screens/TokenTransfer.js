@@ -35,6 +35,7 @@ const TokenTransfer = () => {
         }
 
         const data = {
+            sender: selectedSource,
             recipient : selectedTarget,
             amount:amount
           };
@@ -43,7 +44,7 @@ const TokenTransfer = () => {
           const url = `${API_URL}/transfer?${params}`;  
           console.log("sender is "+ selectedSource)
 
-        console.log('Calling api:', `${API_URL}/transfer?recipient=${selectedTarget}&amount=${amount}`);
+        console.log('Calling api:', `${API_URL}/transfer?sender=${selectedSource}&recipient=${selectedTarget}&amount=${amount}`);
 
         if(selectedTarget == ALICE_ADDRESS) {
             setAccount("Alice")

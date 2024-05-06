@@ -47,6 +47,15 @@ To see token balance :
 JSON=$(jq -n --arg address $(wasmd keys show validator -a --keyring-backend=test) '{balance: {address: $address}}') && \
 wasmd query wasm contract-state smart $CONTRACT_ADDRESS "$JSON" $NODE --output json | jq
 ```
+
+To mint tokens to participants :
+ 
+```
+JSON=$(jq -n --arg to $(wasmd keys show alice -a --keyring-backend=test) --arg amount 100000 '{"mint": {recipient: $to, amount: $amount}}') && \
+RESP=$(wasmd tx wasm execute $CONTRACT_ADDRESS "$JSON" --from validator --amount="100ustake" \
+  --gas 2000000 -y --chain-id=testing -b sync -o json --keyring-backend=test --output json | jq)
+```
+
 To send some tokens from validator to Alice account:
 
 ```
