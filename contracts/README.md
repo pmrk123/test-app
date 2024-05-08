@@ -14,7 +14,7 @@ To see the stored contract from the explorer
 ```
 TX_HASH_WASMD=$(echo $RESP | jq -r '.txhash') && \
 echo "http://localhost:8088/testing/tx/$TX_HASH_WASMD" 
-open "$EXPLORER_DOSB/tx/$TX_HASH_DOSB"
+open "$EXPLORER_DOSB/tx/$TX_HASH_WASMD"
 ```
 
 ```
