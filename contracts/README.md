@@ -7,7 +7,17 @@ To store the contract and get code is and code hash
 ```
 RESP=$(wasmd tx wasm store "x/wasm/keeper/testdata/cw20_base.wasm" \
   --from validator --gas 2500000 -y --chain-id=testing --node=http://localhost:26657 -b sync -o json --keyring-backend=test)
+```
 
+To see the stored contract from the explorer
+
+```
+TX_HASH_WASMD=$(echo $RESP | jq -r '.txhash') && \
+echo "http://localhost:8088/testing/tx/$TX_HASH_WASMD" 
+open "$EXPLORER_DOSB/tx/$TX_HASH_DOSB"
+```
+
+```
 RESP=$(wasmd q tx $(echo "$RESP"| jq -r '.txhash') -o json)  
 
 CODE_ID=$(echo "$RESP" | jq -r '.events[]| select(.type=="store_code").attributes[]| select(.key=="code_id").value')
@@ -37,6 +47,11 @@ wasmd q tx $(echo "$RESP"| jq -r '.txhash') -o json | jq
 NODE=--node=http://localhost:26657
 
 CONTRACT_ADDRESS=$(wasmd query wasm list-contract-by-code $CODE_ID $NODE --output json | jq -r '.contracts[-1]')
+
+TX_HASH=$(echo $RESP | jq -r '.txhash') && \
+wasmd q tx $TX_HASH $NODE_WASMD --output json | jq && \
+echo "http://localhost:8088/testing/tx/$TX_HASH" && \
+open "http://localhost:8088/testing/tx/$TX_HASH"
 ```
 
 Smart contract is now successfully stored on the chain. 

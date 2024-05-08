@@ -1,0 +1,39 @@
+version: 1
+accounts:
+  - name: validator
+    coins:
+      - 999750000000ustake
+      - 1000000000000ucosm
+  - name: alice
+    coins:
+      - 1000000000000ustake
+      - 1000000000000ucosm
+  - name: fred
+    coins:
+      - 1000000000000ustake
+      - 1000000000000ucosm
+client:
+  openapi:
+    path: docs/static/openapi.yml
+faucet:
+  name: faucet1
+  coins:
+    - 100000stake
+  host: 0.0.0.0:5500
+validators:
+  - name: validator
+    bonded: 100000000ustake
+    app:
+      api:
+        address: :2318
+      grpc:
+        address: :9090
+      grpc-web:
+        address: :10093
+    config:
+      p2p:
+        laddr: :36658
+      rpc:
+        laddr: :26657
+        pprof_laddr: :7061
+    home: $HOME/.chains/wasmd
