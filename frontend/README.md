@@ -9,7 +9,7 @@ Copy the participant's private key and contract address in the (src/env.js) file
 To get participant's private key:
 
 ```
-wasmd keys export validator --keyring-backend=test --unsafe --unarmored-hex
+./../chains/wasmd/build/wasmd keys export validator --unsafe --unarmored-hex
 ```
 
 

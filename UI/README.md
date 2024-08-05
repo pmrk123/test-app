@@ -9,7 +9,7 @@ Copy the participant's address in the (/src/env.js) file
 To get participant's address:
 
 ```
-wasmd keys list --keyring-backend=test
+./../chains/wasmd/build/wasmd keys list
 ```
 
 

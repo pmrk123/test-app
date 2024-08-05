@@ -1,8 +1,8 @@
-import express from 'express';
-import cors from 'cors';
-const router = express.Router();
-router.use(cors())
-import {
+const express = require('express');
+const cors = require('cors');  
+const router = express.Router(); 
+
+const {
     transfer,
     burn,
     send,
@@ -15,20 +15,32 @@ import {
     // sendFrom,
     // updateMarketing,
     // updateMinter,
-} from "./controller.js";
+} = require('./controller.js'); // Correct import
+
+router.use(cors());
 
 router.route('/').get((req, res) => {
     const endpoints = {
-        'POST   /transfer': { Desc: 'transfer tokens from recipient of value amount',
-        Parameters: { "sender":"abc", "recipient":"abc", "amount":"1000000"}},
-        'POST   /burn': { Desc: 'burn the tokens of specified amount',
-        Parameters: { "amount": "1000000"}},
-        'POST   /send': { Desc: '',
-        Parameters: {"contract":"contractAddress", "amount":"1000000", "msg":"any msg"}},
-        'POST   /mint': { Desc: 'mint tokens of value amount for specified recipient',
-        Parameters: { "recipient":"abc", "amount":"1000000"}},
-        'GET   /balance': { Desc: 'print balance',
-        Parameters: { "address":"address"}},
+        'POST   /transfer': { 
+            Desc: 'transfer tokens from recipient of value amount',
+            Parameters: { "sender":"abc", "recipient":"abc", "amount":"1000000"}
+        },
+        'POST   /burn': { 
+            Desc: 'burn the tokens of specified amount',
+            Parameters: { "amount": "1000000"}
+        },
+        'POST   /send': { 
+            Desc: '',
+            Parameters: {"contract":"contractAddress", "amount":"1000000", "msg":"any msg"}
+        },
+        'POST   /mint': { 
+            Desc: 'mint tokens of value amount for specified recipient',
+            Parameters: { "recipient":"abc", "amount":"1000000"}
+        },
+        'GET   /balance': { 
+            Desc: 'print balance',
+            Parameters: { "address":"address"}
+        }
         // 'POST   /increase-allowance': { Desc: '',
         // Parameters: {"spender":"spenderAddress", "amount":"1000000", "expires":"expiry date"}},
         // 'POST   /decrease-allowance': { Desc: '',
@@ -44,7 +56,7 @@ router.route('/').get((req, res) => {
         // 'POST   /update-minter': { Desc: '',
         // Parameters: { "new_minter": "new_minter"}},
     }
-    res.status(200).json(endpoints)
+    res.status(200).json(endpoints);
 });
 
 // execute
@@ -61,6 +73,6 @@ router.route('/mint').post(mint);
 // router.route('/update-minter').post(updateMinter);
 
 // queries
-router.route('/balance').get(balance)
+router.route('/balance').get(balance);
 
-export default router;
+module.exports = router;

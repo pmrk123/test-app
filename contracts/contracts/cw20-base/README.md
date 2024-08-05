@@ -1,48 +1,81 @@
-# CW20 Basic
+# Smart contract deployment
 
-This is a basic implementation of a cw20 contract. It implements
-the [CW20 spec](../../packages/cw20/README.md) and is designed to
-be deployed as is, or imported into other contracts to easily build
-cw20-compatible tokens with custom logic.
+## Locally
 
-Implements:
-
-- [x] CW20 Base
-- [x] Mintable extension
-- [x] Allowances extension
-
-## Running this contract
-
-You will need Rust 1.44.1+ with `wasm32-unknown-unknown` target installed.
-
-You can run unit tests on this via: 
-
-`cargo test`
-
-Once you are happy with the content, you can compile it to wasm via:
+To store the contract and get code is and code hash, 
+Run the below commands in your contracts/contracts folder
 
 ```
-RUSTFLAGS='-C link-arg=-s' cargo wasm
-cp ../../target/wasm32-unknown-unknown/release/cw20_base.wasm .
-ls -l cw20_base.wasm
-sha256sum cw20_base.wasm
+RESP=$(./../../chains/wasmd/build/wasmd tx wasm store "cw20_base.wasm" \
+  --from validator --gas 2500000 -y --chain-id=testing --node=http://localhost:26657 -b sync -o json)
 ```
 
-Or for a production-ready (optimized) build, run a build command in the
-the repository root: https://github.com/CosmWasm/cw-plus#compiling.
+To see the stored contract from the explorer
 
-## Importing this contract
+```
+TX_HASH_WASMD=$(echo $RESP | jq -r '.txhash') && \
+echo "http://localhost:8088/testing/tx/$TX_HASH_WASMD" 
+xdg-open "http://localhost:8088/testing/tx/$TX_HASH_WASMD"
+```
 
-You can also import much of the logic of this contract to build another
-ERC20-contract, such as a bonding curve, overiding or extending what you
-need.
+```
+RESP=$(./../../chains/wasmd/build/wasmd q tx $(echo "$RESP"| jq -r '.txhash') -o json)  
 
-Basically, you just need to write your handle function and import 
-`cw20_base::contract::handle_transfer`, etc and dispatch to them.
-This allows you to use custom `ExecuteMsg` and `QueryMsg` with your additional
-calls, but then use the underlying implementation for the standard cw20
-messages you want to support. The same with `QueryMsg`. You *could* reuse `instantiate`
-as it, but it is likely you will want to change it. And it is rather simple.
+CODE_ID=$(echo "$RESP" | jq -r '.events[]| select(.type=="store_code").attributes[]| select(.key=="code_id").value')
 
-Look at [`cw20-staking`](https://github.com/CosmWasm/cw-tokens/tree/main/contracts/cw20-staking) for an example of how to "inherit"
-all this token functionality and combine it with custom logic.
+CODE_HASH=$(echo "$RESP" | jq -r '.events[]| select(.type=="store_code").attributes[]| select(.key=="code_checksum").value')
+
+echo "* Code id: $CODE_ID"
+
+echo "* Code checksum: $CODE_HASH"
+```
+
+To instantiate the contract 
+ 
+```
+./../../chains/wasmd/build/wasmd query wasm list-code --node=http://localhost:26657 -o json | jq 
+
+
+INIT="{\"name\":\"hello world\", \"symbol\":\"hwrld\", \"decimals\":6, \"initial_balances\":[{\"address\":\"$(./../../chains/wasmd/build/wasmd keys show validator -a)\", \"amount\":\"1000000\"}]}"
+
+<!-- 
+RESP=$(./../../chains/wasmd/build/wasmd tx wasm instantiate "$CODE_ID" "$INIT" --admin="$(./../../chains/wasmd/build/wasmd keys show validator -a)" \
+  --from validator --amount="100ustake" --label "local0.1.0" \
+  --gas 2000000 -y --chain-id=testing -b sync -o json)
+  
+./../../chains/wasmd/build/wasmd q tx $(echo "$RESP"| jq -r '.txhash') -o json | jq -->
+
+NODE=--node=http://localhost:26657
+
+CONTRACT_ADDRESS=$(./../../chains/wasmd/build/wasmd query wasm list-contract-by-code $CODE_ID $NODE --output json | jq -r '.contracts[-1]')
+
+TX_HASH=$(echo $RESP | jq -r '.txhash') && \
+./../../chains/wasmd/build/wasmd q tx $TX_HASH $NODE_WASMD --output json | jq && \
+echo "http://localhost:8088/testing/tx/$TX_HASH" && \
+xdg-open "http://localhost:8088/testing/tx/$TX_HASH"
+```
+
+Smart contract is now successfully stored on the chain. 
+
+To see token balance :
+ 
+```
+JSON=$(jq -n --arg address $(./../../chains/wasmd/build/wasmd keys show validator -a) '{balance: {address: $address}}') && \
+./../../chains/wasmd/build/wasmd query wasm contract-state smart $CONTRACT_ADDRESS "$JSON" $NODE --output json | jq
+```
+
+To mint tokens to participants :
+ 
+```
+JSON=$(jq -n --arg to $(./../../chains/wasmd/build/wasmd keys show alice -a) --arg amount 100000 '{"mint": {recipient: $to, amount: $amount}}') && \
+RESP=$(./../../chains/wasmd/build/wasmd tx wasm execute $CONTRACT_ADDRESS "$JSON" --from validator --amount="100ustake" \
+  --gas 2000000 -y --chain-id=testing -b sync -o json --output json | jq)
+```
+
+To send some tokens from validator to Alice account:
+
+```
+JSON=$(jq -n --arg to $(./../../chains/wasmd/build/wasmd keys show alice -a) --arg amount 100 '{"transfer": {recipient: $to, amount: $amount}}') && \
+RESP=$(./../../chains/wasmd/build/wasmd tx wasm execute $CONTRACT_ADDRESS "$JSON" --from validator --amount="100ustake" \
+  --gas 2000000 -y --chain-id=testing -b sync -o json --output json | jq)
+```

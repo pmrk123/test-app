@@ -1,17 +1,15 @@
 {
-    "dependencies": {
-      "@cosmjs/cosmwasm-stargate": "^0.32.3",
-      "cors": "^2.8.5",
-      "express": "^4.19.2",
-      "express-async-handler": "^1.2.0"
-    },
-    "devDependencies": {
-      "@types/node": "^20.12.7"
-    },
-    "type": "module",
-    "scripts": {
-      "start": "node frontend/src/api/app.js",
-      "server": "PORT=5000 nodemon frontend/src/api/app.js"
-    }
+  "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.32.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7"
+  },
+  "scripts": {
+    "start": "node frontend/src/api/app.cjs",
+    "server": "PORT=5000 nodemon frontend/src/api/app.cjs"
   }
-  
+}

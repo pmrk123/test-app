@@ -1,18 +1,19 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { DirectSecp256k1Wallet } from "@cosmjs/proto-signing";
-import { fromHex } from "@cosmjs/encoding";
-import { GasPrice } from "@cosmjs/stargate";
+const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
+const { DirectSecp256k1Wallet } = require("@cosmjs/proto-signing");
+const { fromHex } = require("@cosmjs/encoding");
+const { GasPrice } = require("@cosmjs/stargate");
 
-import { Cw20BaseClient } from "../../out/codegen/Cw20Base.client.cjs";
+const { Cw20BaseClient } = require("../../out/codegen/Cw20Base.client.cjs");
 
 
-import { contractAddress,validatorPrivKey, alicePrivKey, fredPrivKey} from "../env.js";
+const { contractAddress,validatorPrivKey, alicePrivKey, fredPrivKey} = require("../env.js");
 const getSignerFromPriKey = async (priv) => {
     return DirectSecp256k1Wallet.fromKey(fromHex(priv), "wasm");
 };
-export const rpcUrl = "http://localhost:26657";
+const rpcUrl = "http://localhost:26657";
+module.exports = { rpcUrl };
 
-export async function validatorClient() {
+async function validatorClient() {
     const validatorSigner = await getSignerFromPriKey(validatorPrivKey);
     const validatorAddress = (await validatorSigner.getAccounts())[0].address
     const validatorssc = await SigningCosmWasmClient.connectWithSigner(rpcUrl, validatorSigner, { gasPrice: GasPrice.fromString("100ustake") });
@@ -21,7 +22,10 @@ export async function validatorClient() {
     return validatorwc;
 }
 
-export async function aliceClient() {
+module.exports = { validatorClient };
+
+
+ async function aliceClient() {
     const aliceSigner = await getSignerFromPriKey(alicePrivKey);
     const aliceAddress = (await aliceSigner.getAccounts())[0].address
     const alicessc = await SigningCosmWasmClient.connectWithSigner(rpcUrl, aliceSigner, { gasPrice: GasPrice.fromString("100ustake") });
@@ -30,7 +34,9 @@ export async function aliceClient() {
     return alicewc;
 }
 
-export async function fredClient() {
+module.exports = { aliceClient };
+
+ async function fredClient() {
     const fredSigner = await getSignerFromPriKey(fredPrivKey);
     const fredAddress = (await fredSigner.getAccounts())[0].address
     const fredssc = await SigningCosmWasmClient.connectWithSigner(rpcUrl, fredSigner, { gasPrice: GasPrice.fromString("100ustake") });
@@ -38,3 +44,5 @@ export async function fredClient() {
 
     return fredwc;
 }
+
+module.exports = { fredClient };

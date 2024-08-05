@@ -1,6 +1,7 @@
-import express, { json, urlencoded } from 'express';
-import router from './routes.js';
-import errorHandler from './errorMiddleware.js';
+const express = require('express');
+const { json, urlencoded } = express;
+const router = require('./routes.js');
+const errorHandler = require('./errorMiddleware.js');
 
 const app = express();
 const DEFAULT_PORT = 4000;
